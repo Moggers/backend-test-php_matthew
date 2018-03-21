@@ -15,6 +15,9 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\Topic::class, function (Faker $faker) {
     return [
-        // TODO
+      'title' => $faker->text,
+      'body' => $faker->text,
+      'user_id' => App\Models\User::inRandomOrder()->first(),
+      'section_id' => App\Models\Section::inRandomOrder()->first(),
     ];
 });

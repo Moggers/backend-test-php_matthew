@@ -28,14 +28,14 @@ class UserProfileController extends Controller
      * @param  \App\Models\User         $user
      * @return User
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'nickname' => 'required', // TODO: Check if unique
             'bio' => 'required',
         ]);
-        $user->update($request->all());
+        $request->user()->update($request->all());
 
-        return $user->fresh();
+        return $request->user()->fresh();
     }
 }
