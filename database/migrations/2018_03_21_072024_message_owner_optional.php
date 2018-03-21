@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DefaultBio extends Migration
+class MessageOwnerOptional extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DefaultBio extends Migration
      */
     public function up()
     {
-      Schema::table('users', function (Blueprint $table) {
-        $table->string('bio', 500)->default("")->change();
+      Schema::table('messages', function(Blueprint $table) {
+        $table->unsignedInteger('parent_id')->nullable()->change();
       });
     }
 
@@ -25,8 +25,8 @@ class DefaultBio extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-          $table->string('bio', 500)->default(null)->change();
-        });
+      Schema::table('messages', function(Blueprint $table) {
+        $table->unsignedInteger('parent_id')->nullable(false)->change();
+      });
     }
 }
