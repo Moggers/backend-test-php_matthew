@@ -12,6 +12,8 @@ class MessageController extends Controller
     public function reply(Message $message, Request $request) {
         $this->validate($request, [
             'body' => 'required',
+            'topic_id' => 'notPresent',
+            'user_id' => 'notPresent',
         ]);
 
         $new_message = new Message( array_merge($request->all(), [
@@ -28,6 +30,10 @@ class MessageController extends Controller
       if($message->user_id != $request->user()->id) {
         abort(403);
       }
+      $this->validate($request, [
+        'topic_id' => 'notPresent',
+        'user_id' => 'notPresent',
+      ]);
       $message->update($request->all());
 
       return $message->fresh();

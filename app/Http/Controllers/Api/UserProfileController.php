@@ -14,7 +14,19 @@ class UserProfileController extends Controller
      * @param User $user
      * @return User
      */
-    public function show(User $user)
+    public function showSelf(Request $request)
+    {
+        return $request->user();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @todo Only return fields appropriate to profile; nickname, bio etc.
+     * @param User $user
+     * @return User
+     */
+    public function show(User $user, Request $request)
     {
         return $user;
     }
@@ -25,14 +37,14 @@ class UserProfileController extends Controller
      * @todo Only return fields appropriate to profile; nickname, bio etc.
      * @todo Only the owning user should be able to update the profile.
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\User         $user
      * @return User
      */
     public function update(Request $request)
     {
         $this->validate($request, [
-            'nickname' => 'required', // TODO: Check if unique
-            'bio' => 'required',
+            'nickname' => 'unique:users',
+            'remember_token' => 'notPresent',
+            'password' => 'notPresent',
         ]);
         $request->user()->update($request->all());
 

@@ -53,7 +53,8 @@ class MessageControllerTest extends PassportTestCase
         ->decodeResponseJson();
 
       $this
-        ->post('/api/v1/messages/' . $message['id'], ['body' => 'This is an illegal update'])
+        ->post('/api/v1/messages/' . $message['id'], ['body' => 'This is a legal update'])
+        ->assertJsonFragment(['body' => 'This is a legal update'])
         ->assertStatus(200);
     }
 }

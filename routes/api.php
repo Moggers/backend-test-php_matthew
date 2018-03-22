@@ -33,12 +33,16 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
     Route::get('/topics/{topic}/messages', 'TopicController@messages');
     Route::post('/sections/{section}/topics', 'TopicController@store')->middleware('auth:api');
     Route::get('/sections/{section}/topics', 'TopicController@index');
+    Route::post('/topics/{topic}', 'TopicController@update')->middleware('auth:api');
+    Route::get('/topics/{topic}', 'TopicController@show')->middleware('auth:api');
+    Route::delete('/topics/{topic}/delete', 'TopicController@destroy')->middleware('auth:api');
     //Route::apiResource('/sections/{section}/topics', 'TopicController')->middleware('auth:api');
 
 
     // Users
-    Route::get('/users/{user}/profile', 'UserProfileController@show')->middleware('auth:api');
-    Route::patch('/users/self/profile', 'UserProfileController@update')->middleware('auth:api');
+    Route::patch('/users/self', 'UserProfileController@update')->middleware('auth:api');
+    Route::get('/users/self', 'UserProfileController@showSelf')->middleware('auth:api');
+    Route::get('/users/{user}', 'UserProfileController@show')->middleware('auth:api');
     // TODO: Seems unsafe to expose users as a direct storage so we'll comment it out until we're sure we need it
     //Route::apiResource('users', 'UserController');
 });

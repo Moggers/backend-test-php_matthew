@@ -44,6 +44,8 @@ class TopicController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
+            'section_id' => 'notPresent',
+            'user_id' => 'notPresent',
         ]);
 
         return Topic::create(array_merge($request->all(), ['user_id' => $request->user()->id, 'section_id' => $section->id]));
@@ -59,6 +61,13 @@ class TopicController extends Controller
      */
     public function update(Request $request, Topic $topic)
     {
+        if($topic->user_id != $request->user()->id) {
+          return response()->json('Unauthorized', 403);
+        }
+        $this->validate($request, [
+            'section_id' => 'notPresent',
+            'user_id' => 'notPresent',
+        ]);
         $topic->update($request->all());
 
         return $topic->fresh();
@@ -70,8 +79,11 @@ class TopicController extends Controller
      * @param  \App\Models\Topic $topic
      * @throws \Exception
      */
-    public function destroy(Topic $topic)
+    public function destroy(Topic $topic, Request $request)
     {
+        if($topic->user_id != $request->user()->id) {
+          return response()->json('Unauthorized', 403);
+        }
         $topic->delete();
     }
 
@@ -96,6 +108,8 @@ class TopicController extends Controller
     {
         $this->validate($request, [
             'body' => 'required',
+            'topic_id' => 'notPresent',
+            'user_id' => 'notPresent',
         ]);
 
         $new_message = new Message(array_merge($request->all(), ['user_id' => $request->user()->id, 'topic_id' => $topic->id]));

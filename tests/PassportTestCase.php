@@ -35,4 +35,12 @@ class PassportTestCase extends TestCase
     {
         return parent::post($uri, $data, array_merge($this->headers, $headers));
     }
+    public function delete($uri, array $data = [], array $headers = [])
+    {
+        return parent::delete($uri, $data, array_merge($this->headers, $headers));
+    }
+    public function patch($uri, array $data = [], array $headers = [])
+    {
+        return parent::patch($uri, $data, array_merge($this->headers, $headers));
+    }
 }

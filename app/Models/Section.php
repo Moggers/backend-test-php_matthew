@@ -13,4 +13,19 @@ class Section extends Model
     {
         return $this->hasMany(Topic::class);
     }
+
+    /**
+     * Takes a $section, and patches it by selecting data from $changeset
+     *
+     * @param Section $section target of changes
+     * @param array $params details
+     *
+     * @return Section $section Updated section
+     /*/
+    public function changeset(Section $section, array $params): Section {
+      $new_section = $section;
+      $new_section->name = $params->name;
+
+      return $new_section;
+    }
 }
