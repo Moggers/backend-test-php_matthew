@@ -8,11 +8,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SectionControllerTest extends PassportTestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testCreateSection()
     {
         $this
@@ -23,15 +18,11 @@ class SectionControllerTest extends PassportTestCase
 
     public function testShowSessions()
     {
-        $response = $this
-        ->get('/api/v1/sections');
-
-        $response
+        $sections = $this
+            ->get('/api/v1/sections')
             ->assertJsonFragment(['name'])
-            ->assertStatus(200);
-
-        $sections = $response
-        ->decodeResponseJson();
+            ->assertStatus(200)
+            ->decodeResponseJson();
 
         $this
             ->get('/api/v1/sections/' . $sections['data'][0]['id'])

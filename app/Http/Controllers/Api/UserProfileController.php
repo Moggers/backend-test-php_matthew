@@ -92,4 +92,33 @@ class UserProfileController extends Controller
             )
         )->toArray();
     }
+
+    /**
+     * Set the user's profile
+     *
+     * @param Request $request contains the authed user and the file input
+     */
+    public function setAvatar(Request $request)
+    {
+        $request->validate(
+            [
+            'avatar' => 'required|image'
+            ]
+        );
+
+        $imageName = time() . '-' . $request->user()->id . '.' . $request->avatar->getClientOriginalExtension();
+        $request->avatar->move(public_path('images/avatars'), $imageName);
+        $user = $request->user();
+        $avatar_path = 'images/avatars/' . $imageName;
+        $user->update(['avatar' => $avatar_path]);
+
+        $manager = new Manager();
+        $manager->setSerializer(new JsonApiSerializer());
+        return $manager->createData(
+            new Item(
+                $user->fresh(), 
+                new UserTransformer
+            )
+        )->toArray();
+    }
 }

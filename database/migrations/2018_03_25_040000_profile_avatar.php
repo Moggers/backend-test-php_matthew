@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddNicknameToUsers extends Migration
+class ProfileAvatar extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AddNicknameToUsers extends Migration
     public function up()
     {
         Schema::table(
-            'users', function (Blueprint $table) {
-                $table->string('nickname', 20)->nullable();
+            'users', function ( Blueprint $table) {
+                $table->string('avatar', 128)->nullable();
             }
         );
     }
@@ -27,10 +27,6 @@ class AddNicknameToUsers extends Migration
      */
     public function down()
     {
-        Schema::table(
-            'users', function (Blueprint $table) {
-                $table->dropColumn('nickname');
-            }
-        );
+        //
     }
 }

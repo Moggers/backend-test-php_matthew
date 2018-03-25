@@ -41,6 +41,7 @@ Route::group(
         Route::patch('/users/self', 'UserProfileController@update')->middleware('auth:api');
         Route::get('/users/self', 'UserProfileController@showSelf')->middleware('auth:api');
         Route::get('/users/{user}', 'UserProfileController@show')->middleware('auth:api');
+        Route::post('/users/self/avatar', 'UserProfileController@setAvatar')->middleware('auth:api');
         // TODO: Seems unsafe to expose users as a direct storage so we'll comment it out until we're sure we need it
         //Route::apiResource('users', 'UserController');
     }

@@ -21,6 +21,7 @@ class UserTransformer extends Fractal\TransformerAbstract
         "nickname" => $user->nickname,
         "name" => $user->name,
         "email" => $user->email,
+        "avatar" => $user->avatar,
         ];
     }
 }
