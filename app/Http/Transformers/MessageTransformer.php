@@ -29,6 +29,7 @@ class MessageTransformer extends Fractal\TransformerAbstract
         'author' => $message->user_id,
         'created' => $message->created_at->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s'),
         'parent_id' => $message->parent_id,
+        'is_highlight' => $message->is_highlight,
         'children' => $children,
         ];
     }

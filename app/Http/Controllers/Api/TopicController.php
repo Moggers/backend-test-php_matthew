@@ -168,6 +168,7 @@ class TopicController extends Controller
             'body' => 'required',
             'topic_id' => 'notPresent',
             'user_id' => 'notPresent',
+            'is_highlight' => 'notPresent',
             ]
         );
 

@@ -26,6 +26,7 @@ Route::group(
         // Messages
         Route::put('/messages/{message}/reply', 'MessageController@reply')->middleware('auth:api');
         Route::post('/messages/{message}', 'MessageController@update')->middleware('auth:api');
+        Route::post('/messages/{message}/highlight', 'MessageController@highlight')->middleware('auth:api');
 
         // Topics
         Route::put('/topics/{topic}/messages', 'TopicController@postMessage')->middleware('auth:api');

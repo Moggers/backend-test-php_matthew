@@ -109,7 +109,7 @@ class UserProfileController extends Controller
         $imageName = time() . '-' . $request->user()->id . '.' . $request->avatar->getClientOriginalExtension();
         $request->avatar->move(public_path('images/avatars'), $imageName);
         $user = $request->user();
-        $avatar_path = 'images/avatars/' . $imageName;
+        $avatar_path = '/images/avatars/' . $imageName;
         $user->update(['avatar' => $avatar_path]);
 
         $manager = new Manager();

@@ -62,4 +62,32 @@ class MessageControllerTest extends PassportTestCase
             ->assertJsonFragment(['body' => 'This is a legal update'])
             ->assertStatus(200);
     }
+
+    public function testHighlight()
+    {
+        $sections = $this
+            ->get('/api/v1/sections/')
+            ->decodeResponseJson();
+
+        $topic = $this
+            ->post('/api/v1/sections/' . $sections['data'][0]['id'] . '/topics', ['title' => 'Test Topic', 'body' => 'Test Topic Body'])
+            ->assertJsonFragment(['title' => 'Test Topic', 'body' => 'Test Topic Body'])
+            ->assertStatus(200)
+            ->decodeResponseJson();
+
+        $message = $this
+            ->put('/api/v1/topics/' . $topic['data']['id'] . '/messages', ['body' => 'This is a message'])
+            ->assertJsonFragment(['body'])
+            ->assertStatus(200)
+            ->decodeResponseJson();
+
+        $this
+            ->post('/api/v1/messages/' . $message['data']['id'] . '/highlight', ['highlight' => true])
+            ->assertJsonFragment(['is_highlight' => 1])
+            ->assertStatus(200);
+        $this
+            ->post('/api/v1/messages/' . $message['data']['id'] . '/highlight', ['highlight' => false])
+            ->assertJsonFragment(['is_highlight' => 0])
+            ->assertStatus(200);
+    }
 }

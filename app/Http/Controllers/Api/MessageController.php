@@ -20,6 +20,7 @@ class MessageController extends Controller
             'body' => 'required',
             'topic_id' => 'notPresent',
             'user_id' => 'notPresent',
+            'is_highlight' => 'notPresent',
             ]
         );
 
@@ -43,6 +44,25 @@ class MessageController extends Controller
                 new MessageTransformer()
             )
         )->toArray();
+    }
+
+    public function highlight(Message $message, Request $request) 
+    {
+        if ($request->user()->id == $message->topic->user_id) {
+            $message->update(['is_highlight' => $request->highlight]);
+
+            $manager = new Manager();
+            $manager->setSerializer(new JsonApiSerializer());
+            return $manager->createData(
+                new Item(
+                    $message->fresh(),
+                    new MessageTransformer()
+                )
+            )->toArray();
+        } else {
+            response()->json(['Unauthorized', 403]);
+        }
+
     }
 
     public function update(Message $message, Request $request) 
