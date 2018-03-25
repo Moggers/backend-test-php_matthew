@@ -36,6 +36,7 @@ class SectionControllerTest extends PassportTestCase
         $this
             ->get('/api/v1/sections/' . $sections['data'][0]['id'])
             ->assertJsonFragment(['name'])
+            ->assertJsonFragment(['message_count'])
             ->assertStatus(200);
     }
 }

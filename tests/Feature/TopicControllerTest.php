@@ -36,6 +36,7 @@ class TopicControllerTest extends PassportTestCase
             ->decodeResponseJson();
         $this
             ->get('/api/v1/topics/' . $topics['data'][0]['id'])
+            ->assertJsonFragment(['message_count'])
             ->assertStatus(200);
     }
 

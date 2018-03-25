@@ -19,6 +19,11 @@ class SectionTransformer extends Fractal\TransformerAbstract
         return [
         'id' => $section->id,
         'name' => $section->name,
+        'message_count' => $section->topics->reduce(
+            function ($accumulator, $current) {
+                return $accumulator + count($current->messages); 
+            }
+        ),
         'created' => $section->created_at->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s'),
         ];
     }

@@ -21,6 +21,7 @@ class TopicTransformer extends Fractal\TransformerAbstract
         'title' => $topic->title,
         'body' => $topic->body,
         'author' => $topic->user_id,
+        'message_count' => count($topic->messages),
         'section_id' => $topic->section_id,
         'created' => $topic->created_at->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s'),
         ];
