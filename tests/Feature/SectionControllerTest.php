@@ -15,27 +15,27 @@ class SectionControllerTest extends PassportTestCase
      */
     public function testCreateSection()
     {
-      $this
-        ->post('/api/v1/sections', ['name' => 'New Section'])
-        ->assertJson(['name' => 'New Section'])
-        ->assertStatus(201);
+        $this
+            ->post('/api/v1/sections', ['name' => 'New Section'])
+            ->assertJsonFragment(['name' => 'New Section'])
+            ->assertStatus(200);
     }
 
     public function testShowSessions()
     {
-      $response = $this
+        $response = $this
         ->get('/api/v1/sections');
 
-      $response
-        ->assertJsonFragment(['name'])
-        ->assertStatus(200);
+        $response
+            ->assertJsonFragment(['name'])
+            ->assertStatus(200);
 
-      $sections = $response
+        $sections = $response
         ->decodeResponseJson();
 
-      $this
-        ->get('/api/v1/sections/' . $sections[0]['id'])
-        ->assertJsonFragment(['name'])
-        ->assertStatus(200);
+        $this
+            ->get('/api/v1/sections/' . $sections['data'][0]['id'])
+            ->assertJsonFragment(['name'])
+            ->assertStatus(200);
     }
 }
